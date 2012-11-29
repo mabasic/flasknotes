@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="description" content="aplikacija za uvjezbavanje tehnologija">
+    <meta name="author" content="Mario Basic">
+    <!-- Bootstrap Responsive requirement -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FlaskNotes</title>
+
+    <!-- Bootstrap -->
+    <link href="static/css/bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap Responsive -->
+    <link href="static/css/bootstrap-responsive.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+       
+          <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+           
+          <!-- Be sure to leave the brand out there if you want it shown -->
+          <a class="brand" href="#">FlaskNotes</a>
+           
+          <!-- Everything you want hidden at 940px or less, place within here -->
+          <div class="nav-collapse collapse">
+          <!-- .nav, .navbar-search, .navbar-form, etc -->
+            <ul class="nav" id="navbar">
+              <li class="active"><a href="/">Home</a></li>
+              <li class=""><a href="#/notes">Notes</a></li>
+              <li class=""><a href="#/register">Register</a></li>
+            </ul>
+            <form class="navbar-form pull-right" id="userbar">
+              <input type="text" class="span2" placeholder="Username">
+              <input type="password" class="span2" placeholder="Password">
+              <button type="button" class="btn">Log in</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2" id="sidebar">
+          <!--Sidebar content-->
+              <ul class="nav nav-list">
+                <li class="nav-header">Navigation</li>
+                <li class="active"><a href="/">Home</a></li>
+                <li class=""><a href="#/blog">Blog</a></li>
+                <li class=""><a href="#/about">About</a></li>
+              </ul>
+        </div>
+        <div class="span10" id="content">
+          <!--Body content-->
+              <div class="hero-unit">
+                <h1>Welcome to FlaskNotes</h1>
+                <p>Log in to view your notes or create new ones. <b>Register</b> to use this application.</p>
+                <p>
+                  <a class="btn btn-primary btn-large">Register</a>
+                </p>
+              </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <footer>
+        <p>&copy; Mario Bašić 2012</p>
+      </footer>
+
+    </div>
+
+    <!-- Bootstrap and Backbone requirement -->
+    <script src="static/js/jquery.js"></script>
+    <!-- Backbone requirement -->
+    <script src="static/js/underscore.js"></script>
+    <!-- Backbone -->
+    <script src="static/js/backbone.js"></script>
+    <!-- Bootstrap -->
+    <script src="static/js/bootstrap.js"></script>
+    <!-- Jade runtime -->
+    <script src="static/js/jade_runtime.js"></script>
+    <!-- Jade templates js -->
+    <script src="static/js/templates.js"></script>
+    <!-- Marionette requirement + all Backbone -->
+    <script src="static/js/json2.js"></script>
+    <!-- Marionette -->
+    <script src="static/js/backbone.marionette.js"></script>
+
+  </body>
+</html>
