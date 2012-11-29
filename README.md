@@ -1,7 +1,7 @@
 # flasknotes
 
-**Technology showcase for flask, sqlalchemy, marionette.js, jade templates, bootstrap and sqlite**.
-This is a simple web application for creating notes. Users first have to register, then log in and start creating notes. This application is created for learing [marionette.js](http://marionettejs.com/).
+**Technology showcase for flask, sqlalchemy, backbone, jade templates, bootstrap and sqlite**.
+This is a simple web application for creating notes. Users first have to register, then log in and start creating notes. This application is created to learn how to develop serious web applications.
 
 # Quick notes
 
