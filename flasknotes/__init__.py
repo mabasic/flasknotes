@@ -21,6 +21,8 @@ ENGINE_REP = False
 LOAD_SAMPLES = False
 # Create/update all tables
 CREATE_TABLES = False
+# Neccessary for using sessions
+SECRET_KEY = "supersafesecretkey"
 
 # Create app instance
 app = Flask(__name__)

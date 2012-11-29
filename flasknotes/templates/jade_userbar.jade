@@ -1,0 +1,10 @@
+if session_active == false
+  input.span2(type="text", placeholder="Username", style="margin-right: 4px", name="username")
+  input.span2(type="password", placeholder="Password", style="margin-right: 4px", name="password")
+  button.btn.login(type="button")
+    i.icon-user
+    | Log in
+else
+  button.btn.logout(type="button")
+    i.icon-user 
+    | Log out

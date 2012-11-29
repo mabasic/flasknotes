@@ -14,6 +14,13 @@ class User(Base):
         self.username = username
         self.password = password
 
+    def toJSON(self):
+        return {
+            'id': self.idUser,
+            'username': self.username,
+            'password': self.password
+            }
+
     def __repr__(self):
         return "<User('%s','%s')>" % (self.username, self.password)
 
