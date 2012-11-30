@@ -32,7 +32,7 @@ def create_session():
         session['active'] = True
         session["idUser"] = user.idUser
         session["username"] = user.username
-        js = json.dumps({ "error":"none" , "message":"ok" , "id" : user.idUser })
+        js = json.dumps({ "error":"none" , "message":"ok" })
         resp = Response(js , status=200, mimetype="application/json")
     
     return resp 
@@ -51,10 +51,13 @@ def delete_session():
     return resp
 
 @app.route('/api/session', methods=['GET'])
-def isActive_session():
+def sync_session():
 
     if session.get('active'):
-        js = json.dumps({ "error":"none" , "message":"ok" })
+        js = json.dumps({ 
+            "id":session.get("idUser"),
+            "username":session.get("username") 
+             })
         resp = Response(js , status=200, mimetype="application/json")
     
     else:
@@ -68,6 +71,40 @@ def isActive_session():
 def get_user(user_id):
     user = db_session.query(User).filter_by(idUser = user_id).first()
     
-    js = json.dumps([user.toJSON()])
+    js = json.dumps(user.toJSON())
     resp = Response(js, status=200, mimetype="application/json")
+    return resp
+
+# Model - UserModel
+@app.route('/api/user', methods=['POST'])
+def add_user():
+    
+    #zapisi u bazu novog korisnika
+    userJSON = json.loads(request.data)
+
+    user = User(userJSON["username"],userJSON["password"])
+
+    db_session.add(user)
+    db_session.commit()
+
+    js = json.dumps({ "error":"none" , "message":"ok" })
+    resp = Response(js , status=200, mimetype="application/json")
+    return resp
+
+# Check if a user with received username exists
+@app.route("/api/user/check/username", methods=["POST"])
+def check_username():
+    username = json.loads(request.data)["username"]
+
+    print username
+    # run tests on username to see if it is taken or free
+    user = db_session.query(User).filter_by(username=username).first()
+
+    #if there is no user with that username, return good
+    if user == None:
+        js = json.dumps({ "error":"none" , "message":"ok" })
+        resp = Response(js , status=200, mimetype="application/json")
+    else:
+        js = json.dumps({ "error":"username taken" , "message":"failed" })
+        resp = Response(js , status=406, mimetype="application/json")
     return resp

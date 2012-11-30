@@ -18,7 +18,7 @@
   </head>
   <body>
 
-    <div class="navbar navbar-inverse navbar-static-top">
+    <div class="navbar navbar-inverse navbar-static-top" style="padding-bottom:20px;">
       <div class="navbar-inner">
         <div class="container-fluid">
        
@@ -30,18 +30,22 @@
           </a>
            
           <!-- Be sure to leave the brand out there if you want it shown -->
-          <a class="brand" href="#">FlaskNotes</a>
+          <a class="brand" href="/">FlaskNotes</a>
            
           <!-- Everything you want hidden at 940px or less, place within here -->
           <div class="nav-collapse collapse">
           <!-- .nav, .navbar-search, .navbar-form, etc -->
             <ul class="nav" id="navbar">
-              <li class="active"><a href="/">Home</a></li>
-              <li class=""><a href="#/notes">Notes</a></li>
-              <li class=""><a href="#/register">Register</a></li>
+              <li class="active"><a href="/#"><i class="icon-home"></i> Home</a></li>
+              <li class=""><a href="#/notes"><i class="icon-file"></i> Notes</a></li>
+              <li class=""><a href="#/register"><i class="icon-user"></i> Register</a></li>
+              <li class=""><a href="#/blog"><i class="icon-book"></i> Blog</a></li>
+              <li class=""><a href="#/about"><i class="icon-globe"></i> About</a></li>
             </ul>
             <form class="navbar-form pull-right" id="userbar">
             </form>
+            <p class="navbar-text pull-right" style="margin-right:5px;">
+            </p>
           </div>
         </div>
       </div>
@@ -51,12 +55,12 @@
       <div class="row-fluid">
         <div class="span2" id="sidebar">
           <!--Sidebar content-->
-              <ul class="nav nav-list">
+              <!--<ul class="nav nav-list">
                 <li class="nav-header">Navigation</li>
-                <li class="active"><a href="/">Home</a></li>
+                <li class="active"><a href="/#">Home</a></li>
                 <li class=""><a href="#/blog">Blog</a></li>
                 <li class=""><a href="#/about">About</a></li>
-              </ul>
+              </ul>-->
         </div>
         <div class="span10" id="content">
           <!--Body content-->
@@ -64,7 +68,7 @@
                 <h1>Welcome to FlaskNotes</h1>
                 <p>Log in to view your notes or create new ones. <b>Register</b> to use this application.</p>
                 <p>
-                  <a class="btn btn-primary btn-large">Register</a>
+                  <a href="#/register" class="btn btn-primary btn-large">Register</a>
                 </p>
               </div>
         </div>

@@ -1,0 +1,18 @@
+form.form-horizontal
+	
+	div#formUsername.control-group.info
+		label.control-label(for="reg_username") Username
+		div.controls
+			input(type="text", name="reg_username", placeholder="Username")
+			span#helpUsername.help-inline Username must be minimum 6 characters long.
+
+	div.control-group
+		label.control-label(for="reg_password") Password
+		div.controls
+			input(type="password", name="reg_password", placeholder="Password")
+
+	div.control-group
+		div.controls
+			button.btn.btn-primary.register(type="button")
+				i.icon-user.icon-white
+				|  Register
