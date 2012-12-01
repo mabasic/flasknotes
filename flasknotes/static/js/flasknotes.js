@@ -287,6 +287,21 @@ var AppRouter = Backbone.Router.extend({
         	$("#navbar li:eq(2)").addClass("active");
 
         	//create and render blogview
+        	try {
+        		//try to remove loaded view
+				//registerview.undelegateEvents();
+				registerview.remove();
+				registerview.unbind();
+				//click on register button triggers X events
+				//depending on times view is started
+				//memory build up //TO DO
+				
+			}
+			catch(err) {
+			  	//Handle errors here
+			  	console.log(err);
+			}
+			//create new view
         	var registerview = new RegisterView;
         },
         home: function(){

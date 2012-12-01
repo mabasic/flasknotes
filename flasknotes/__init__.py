@@ -14,7 +14,7 @@ from sqlalchemy.orm import  sessionmaker
 # Depending on this variable, configure error reporting and debugging
 DEBUG = False
 # Location and type of database
-ENGINE_URL = 'sqlite:///D:/MB/GProjects/FlaskNotes/tmp/flasknotes.db'
+ENGINE_URL = 'sqlite:///tmp/flasknotes.db' # Directory tmp must exist
 # Database (engine) reporting
 ENGINE_REP = False
 # Load sample data
