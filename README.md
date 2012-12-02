@@ -64,6 +64,13 @@ venv\scripts\activate
 deactivate
 ```
 
+**USEFUL TIP!!!**
+
+If virtualenv throws permission denied, when you try to activate it using source ENV/bin/activate or when you try to install something with pip, execute this code:
+```
+sudo chown -R user:group ENV
+```
+
 ## Installing requirements.txt using pip
 
 Having virtualenv activated type the following:
