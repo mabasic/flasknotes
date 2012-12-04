@@ -342,7 +342,6 @@ var AppRouter = Backbone.Router.extend({
            if (view){
                view.undelegateEvents();
                view.remove();
-               console.log("unbindanje trenutnog viewa");
            }
        },
 
@@ -355,7 +354,6 @@ var AppRouter = Backbone.Router.extend({
                AppRouter.navigate("#/login", {trigger: true, replace: true});
                return;
            }*/
-           console.log("postavljanje novog viewa");
 
            this.currentView = newView;
            this.el.empty().html(newView.el); // pitati
