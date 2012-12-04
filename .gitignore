@@ -168,3 +168,6 @@ ENV
 
 # Nodejs
 node_modules
+
+# Generated templates functions file
+templates.js
