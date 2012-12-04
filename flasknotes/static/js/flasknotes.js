@@ -80,7 +80,7 @@ function logout(){
 //this shows home page from template
 var RegisterView = Backbone.View.extend({
 	template: jade_register,
-	el: $("#content"),
+	//el: $("#content"),
 	initialize: function(){
 
 		this.render();
@@ -185,7 +185,7 @@ var RegisterView = Backbone.View.extend({
 //this shows home page from template
 var HomeView = Backbone.View.extend({
 	template: jade_home,
-	el: $("#content"),
+	//el: $("#content"),
 	initialize: function(){
 
 		this.render();
@@ -204,7 +204,7 @@ var HomeView = Backbone.View.extend({
 //this shows blog posts from template
 var BlogView = Backbone.View.extend({
 	template: jade_blog,
-	el: $("#content"),
+	//el: $("#content"),
 	initialize: function(){
 
 		this.render();
@@ -272,6 +272,8 @@ var UserbarView = Backbone.View.extend({
 // ROUTERS
 
 var AppRouter = Backbone.Router.extend({
+		currentView: null,
+		el: $("#content"),
         routes: {
             "register" : "register", // matches #/register
             "notes" : "view_all_notes",
@@ -287,7 +289,7 @@ var AppRouter = Backbone.Router.extend({
         	$("#navbar li:eq(2)").addClass("active");
 
         	//create and render blogview
-        	try {
+        	/*try {
         		//try to remove loaded view
 				//registerview.undelegateEvents();
 				registerview.remove();
@@ -300,9 +302,11 @@ var AppRouter = Backbone.Router.extend({
 			catch(err) {
 			  	//Handle errors here
 			  	console.log(err);
-			}
+			}*/
+
 			//create new view
         	var registerview = new RegisterView;
+        	this.loadNewView(registerview);
         },
         home: function(){
         	//remove current active element
@@ -313,6 +317,7 @@ var AppRouter = Backbone.Router.extend({
 
         	//create and render blogview
         	var homeview = new HomeView;
+        	this.loadNewView(homeview);
         },
         about: function(){
         	//remove current active element
@@ -330,7 +335,33 @@ var AppRouter = Backbone.Router.extend({
 
         	//create and render blogview
         	var blogview = new BlogView;
+        	this.loadNewView(blogview);
         },
+
+        _unsetView: function(view){
+           if (view){
+               view.undelegateEvents();
+               view.remove();
+               console.log("unbindanje trenutnog viewa");
+           }
+       },
+
+       loadNewView: function(newView){
+           this._unsetView(this.currentView);
+
+           /*if (User.isLoggedIn() == false && newView.isLogginView == undefined){
+               // Login redirect (ALR)
+               User.checkLoggedIn(Backbone.history.fragment);
+               AppRouter.navigate("#/login", {trigger: true, replace: true});
+               return;
+           }*/
+           console.log("postavljanje novog viewa");
+
+           this.currentView = newView;
+           this.el.empty().html(newView.el); // pitati
+           //document.documentElement.scrollTop = 0; // pitati
+       },
+
     });
 
 // APP START
