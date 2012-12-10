@@ -184,7 +184,7 @@ var RegisterView = Backbone.View.extend({
 
 //this shows home page from template
 var HomeView = Backbone.View.extend({
-	template: jade_home,
+	template: doT_home_function,//jade_home,
 	//el: $("#content"),
 	initialize: function(){
 
@@ -193,9 +193,14 @@ var HomeView = Backbone.View.extend({
 	},
 	render: function(){
 
+		//var data = { name: "David" };
+
+
+
 		//render template and pass
 		this.$el.html(this.template({
 			//variables
+			name : "David"
 		}));
 
 	},
@@ -372,6 +377,9 @@ $(function(){
 
 	// Instantiate the router
     var approuter = new AppRouter;
+
+    //Views
+
 
 	// Start Backbone history a necessary step for bookmarkable URL's
     Backbone.history.start();

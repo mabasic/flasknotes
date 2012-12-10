@@ -12,7 +12,7 @@ from sqlalchemy.orm import  sessionmaker
 # Configuration
 # app.config['DEBUG']
 # Depending on this variable, configure error reporting and debugging
-DEBUG = False
+DEBUG = True
 # Location and type of database
 ENGINE_URL = 'sqlite:///tmp/flasknotes.db' # Directory tmp must exist
 # Database (engine) reporting
