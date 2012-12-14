@@ -37,7 +37,7 @@ buf.push('<div class="row-fluid">');
     for (var $index = 0, $$l = notes.length; $index < $$l; $index++) {
       var note = notes[$index];
 
-buf.push('<div class="well span3"><h4>' + escape((interp = note.title) == null ? '' : interp) + '</h4><blockquote><p>' + escape((interp = note.text) == null ? '' : interp) + '</p><small>ID: <cite>' + escape((interp = note.id) == null ? '' : interp) + '</cite></small></blockquote><button style="margin-right:10px;" class="btn">Edit</button><button class="btn btn-danger">Delete</button></div>');
+buf.push('<div class="well span3"><h4>' + escape((interp = note.title) == null ? '' : interp) + '</h4><blockquote><p>' + escape((interp = note.text) == null ? '' : interp) + '</p><small>ID: <cite>' + escape((interp = note.id) == null ? '' : interp) + '</cite></small></blockquote><button style="margin-right:10px;" class="btn"> <i class="icon-pencil"></i> Edit</button><button class="btn btn-danger"> <i class="icon-remove icon-white"></i> Delete</button></div>');
     }
 
   } else {
@@ -48,7 +48,7 @@ buf.push('<h4>You have not created any notes. Click on New Note to create one no
     for (var $index in notes) {
       $$l++;      var note = notes[$index];
 
-buf.push('<div class="well span3"><h4>' + escape((interp = note.title) == null ? '' : interp) + '</h4><blockquote><p>' + escape((interp = note.text) == null ? '' : interp) + '</p><small>ID: <cite>' + escape((interp = note.id) == null ? '' : interp) + '</cite></small></blockquote><button style="margin-right:10px;" class="btn">Edit</button><button class="btn btn-danger">Delete</button></div>');
+buf.push('<div class="well span3"><h4>' + escape((interp = note.title) == null ? '' : interp) + '</h4><blockquote><p>' + escape((interp = note.text) == null ? '' : interp) + '</p><small>ID: <cite>' + escape((interp = note.id) == null ? '' : interp) + '</cite></small></blockquote><button style="margin-right:10px;" class="btn"> <i class="icon-pencil"></i> Edit</button><button class="btn btn-danger"> <i class="icon-remove icon-white"></i> Delete</button></div>');
     }
 
     if ($$l === 0) {
@@ -75,7 +75,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<ul class="nav nav-list"><li class="nav-header">Actions</li><li><a href="#/note/new">New note</a></li></ul>');
+buf.push('<ul class="nav nav-list"><li class="nav-header">Actions</li><li><a href="#/note/new"><i class="icon-file"></i> New note</a></li></ul>');
 }
 return buf.join("");
 }

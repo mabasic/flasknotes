@@ -6,7 +6,11 @@ div.row-fluid
 				p #{note.text}
 				small ID: 
 					cite #{note.id}
-			button.btn(style="margin-right:10px;") Edit
-			button.btn.btn-danger Delete
+			button.btn(style="margin-right:10px;") 
+				i.icon-pencil
+				|  Edit
+			button.btn.btn-danger 
+				i.icon-remove.icon-white
+				|  Delete
 	else
 		h4 You have not created any notes. Click on New Note to create one now.
