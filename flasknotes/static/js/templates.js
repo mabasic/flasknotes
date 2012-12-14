@@ -23,6 +23,44 @@ buf.push('<div class="hero-unit"><h1>Welcome to FlaskNotes</h1><p>Log in to view
 }
 return buf.join("");
 }
+var jade_note = function anonymous(locals, attrs, escape, rethrow, merge) {
+attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
+var buf = [];
+with (locals || {}) {
+var interp;
+buf.push('<div class="row-fluid">');
+// iterate notes
+;(function(){
+  if ('number' == typeof notes.length) {
+
+  if (notes.length) {
+    for (var $index = 0, $$l = notes.length; $index < $$l; $index++) {
+      var note = notes[$index];
+
+buf.push('<div class="well span3"><h4>' + escape((interp = note.title) == null ? '' : interp) + '</h4><blockquote><p>' + escape((interp = note.text) == null ? '' : interp) + '</p><small>ID: <cite>' + escape((interp = note.id) == null ? '' : interp) + '</cite></small></blockquote><button style="margin-right:10px;" class="btn">Edit</button><button class="btn btn-danger">Delete</button></div>');
+    }
+
+  } else {
+buf.push('<h4>You have not created any notes. Click on New Note to create one now.</h4>');
+  }
+  } else {
+    var $$l = 0;
+    for (var $index in notes) {
+      $$l++;      var note = notes[$index];
+
+buf.push('<div class="well span3"><h4>' + escape((interp = note.title) == null ? '' : interp) + '</h4><blockquote><p>' + escape((interp = note.text) == null ? '' : interp) + '</p><small>ID: <cite>' + escape((interp = note.id) == null ? '' : interp) + '</cite></small></blockquote><button style="margin-right:10px;" class="btn">Edit</button><button class="btn btn-danger">Delete</button></div>');
+    }
+
+    if ($$l === 0) {
+buf.push('<h4>You have not created any notes. Click on New Note to create one now.</h4>');
+    }
+  }
+}).call(this);
+
+buf.push('</div>');
+}
+return buf.join("");
+}
 var jade_register = function anonymous(locals, attrs, escape, rethrow, merge) {
 attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
 var buf = [];
@@ -32,12 +70,21 @@ buf.push('<form class="form-horizontal"><div id="formUsername" class="control-gr
 }
 return buf.join("");
 }
+var jade_sidebar = function anonymous(locals, attrs, escape, rethrow, merge) {
+attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
+var buf = [];
+with (locals || {}) {
+var interp;
+buf.push('<ul class="nav nav-list"><li class="nav-header">Actions</li><li><a href="#/note/new">New note</a></li></ul>');
+}
+return buf.join("");
+}
 var jade_blog = function anonymous(locals, attrs, escape, rethrow, merge) {
 attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<div class="row-fluid"><div class="well span3"><h4>Day 1</h4><blockquote><p> <ul><li>Created application structure</li></ul></p><small>Author: <cite title="Mario Bašić">Mario Bašić</cite>, 27.11.2012</small></blockquote></div><div class="well span3"><h4>Day 2</h4><blockquote><p><ul><li>Used Bootstrap to define the application design. </li><li>Reordered python files to improve import organization.</li><li>Defined application functionality</li></ul></p><small>Author: <cite title="Mario Bašić">Mario Bašić</cite>, 28.11.2012</small></blockquote></div><div class="well span3"><h4>Day 3</h4><blockquote><p><ul><li>Using backbone.js created log in / log out bar</li><li>Created server api for handling session </li><li>Dropped marionette.js because it lacks documentation</li></ul></p><small>Author: <cite title="Mario Bašić">Mario Bašić</cite>, 29.11.2012</small></blockquote></div><div class="well span3"><h4>Day 4</h4><blockquote><p><ul><li>Created a backbone router to handle navigation</li><li>Created a view for showing blog posts :)</li><li>Created a view for showing registration form</li><li>Updated site with icons</li><li>Using sessionStorage for handling sessions</li><li>Users can now register; need to implement md5</li></ul></p><small>Author: <cite title="Mario Bašić">Mario Bašić</cite>, 30.11.2012</small></blockquote></div></div><div class="row-fluid"><div class="well span3"><h4>Day 5</h4><blockquote><p><ul><li>Implemented proper use of views and router in backbone.js</li><li>Minor modifications to the project structure and git</li></ul></p><small>Author: <cite title="Mario Bašić">Mario Bašić</cite>, 04.12.2012</small></blockquote></div><div class="well span3"><h4>Day 6</h4><blockquote><p><ul><li>Implemented doT.js templating engine</li><li>Very happy :)</li></ul></p><small>Author: <cite title="Mario Bašić">Mario Bašić</cite>, 10.12.2012</small></blockquote></div></div>');
+buf.push('<div class="row-fluid"><div class="well span3"><h4>Day 1</h4><blockquote><p> <ul><li>Created application structure</li></ul></p><small>Author: <cite title="Mario Bašić">Mario Bašić</cite>, 27.11.2012</small></blockquote></div><div class="well span3"><h4>Day 2</h4><blockquote><p><ul><li>Used Bootstrap to define the application design. </li><li>Reordered python files to improve import organization.</li><li>Defined application functionality</li></ul></p><small>Author: <cite title="Mario Bašić">Mario Bašić</cite>, 28.11.2012</small></blockquote></div><div class="well span3"><h4>Day 3</h4><blockquote><p><ul><li>Using backbone.js created log in / log out bar</li><li>Created server api for handling session </li><li>Dropped marionette.js because it lacks documentation</li></ul></p><small>Author: <cite title="Mario Bašić">Mario Bašić</cite>, 29.11.2012</small></blockquote></div><div class="well span3"><h4>Day 4</h4><blockquote><p><ul><li>Created a backbone router to handle navigation</li><li>Created a view for showing blog posts :)</li><li>Created a view for showing registration form</li><li>Updated site with icons</li><li>Using sessionStorage for handling sessions</li><li>Users can now register; need to implement md5</li></ul></p><small>Author: <cite title="Mario Bašić">Mario Bašić</cite>, 30.11.2012</small></blockquote></div></div><div class="row-fluid"><div class="well span3"><h4>Day 5</h4><blockquote><p><ul><li>Implemented proper use of views and router in backbone.js</li><li>Minor modifications to the project structure and git</li></ul></p><small>Author: <cite title="Mario Bašić">Mario Bašić</cite>, 04.12.2012</small></blockquote></div><div class="well span3"><h4>Day 6</h4><blockquote><p><ul><li>Implemented doT.js templating engine</li><li>Very happy :)</li></ul></p><small>Author: <cite title="Mario Bašić">Mario Bašić</cite>, 10.12.2012</small></blockquote></div><div class="well span3"><h4>Day 7</h4><blockquote><p><ul><li>Removed doT.js templating engine</li><li>Jade is the best!</li><li>Created a new model in database for history tracking</li><li>backbone: model and collection for notes</li><li>backbone: view for notes, read and write</li></ul></p><small>Author: <cite title="Mario Bašić">Mario Bašić</cite>, 14.12.2012</small></blockquote></div></div>');
 }
 return buf.join("");
 }

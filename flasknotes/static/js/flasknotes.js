@@ -75,12 +75,26 @@ function logout(){
    });
 }
 
+// MODELS
+
+var NoteModel = Backbone.Model.extend({
+	urlRoot: "api/note",
+	defaults: {
+		title: "",
+		text: "",
+	},
+});
+
+var NotesCollection = Backbone.Collection.extend({
+	url: "api/notes",
+	model: NoteModel
+});
+
 // VIEWS
 
 //this shows home page from template
 var RegisterView = Backbone.View.extend({
 	template: jade_register,
-	//el: $("#content"),
 	initialize: function(){
 
 		this.render();
@@ -184,18 +198,13 @@ var RegisterView = Backbone.View.extend({
 
 //this shows home page from template
 var HomeView = Backbone.View.extend({
-	template: doT_home_function,//jade_home,
-	//el: $("#content"),
+	template: jade_home,
 	initialize: function(){
 
 		this.render();
 
 	},
 	render: function(){
-
-		//var data = { name: "David" };
-
-
 
 		//render template and pass
 		this.$el.html(this.template({
@@ -209,7 +218,6 @@ var HomeView = Backbone.View.extend({
 //this shows blog posts from template
 var BlogView = Backbone.View.extend({
 	template: jade_blog,
-	//el: $("#content"),
 	initialize: function(){
 
 		this.render();
@@ -230,7 +238,6 @@ var BlogView = Backbone.View.extend({
 var UserbarView = Backbone.View.extend({
 	template: jade_userbar,
 	el: $("#userbar"),
-
 	initialize: function() {
 
 		this.render();
@@ -268,10 +275,79 @@ var UserbarView = Backbone.View.extend({
 		//alert(session.active);
 
 		logout();
+		approuter.navigate("", {trigger: true, replace: true});
 
 		this.render();
 
 	},
+});
+
+//this is a view attached to #userbar
+//handles log in and log out, session
+var SidebarView = Backbone.View.extend({
+	template: jade_sidebar,
+	el: $("#sidebar"),
+	initialize: function() {
+
+		this.render();
+
+	},
+	render: function() {
+
+		//pass variables to jade template
+		this.$el.html(this.template({
+			//session_active : sessionStorage.active
+			//session_username : session.user.get("username")
+		}));
+
+	},
+});
+
+//this shows blog posts from template
+var NoteView = Backbone.View.extend({
+	template: jade_note,
+	initialize: function(){
+		_.bindAll(this, 'render'); //must-have in order for .this to work
+
+		this.notes = new NotesCollection();
+
+		this.notes.fetch({
+			success: function() {
+
+			},
+			error: function() {
+
+			},
+		});
+
+		this.sidebarview = new SidebarView;
+
+		//prilikom ucitavanja pocetnog stanja
+		this.notes.on("reset", this.render);
+		//prilikom promjene podataka
+		//this.notes.on("change", this.render);
+		//prilikom brisanja podataka
+		//this.notes.on("remove", this.render);
+		//prilikom dodavanja podataka
+		//this.notes.on("add", this.render);
+
+		//this.render();
+	},
+	render: function(){
+
+		//render template and pass
+		$(this.el).html(this.template({
+			//variables
+			notes: this.notes.toJSON()
+		}));
+
+	},
+	close: function() {
+      	//alert("haha");
+      	//this.sidebarview.undelegateEvents();
+      	this.sidebarview.$el.html("");
+        //this.sidebarview.remove();
+    }
 });
 
 // ROUTERS
@@ -292,22 +368,6 @@ var AppRouter = Backbone.Router.extend({
 
         	//set active class on menu item register
         	$("#navbar li:eq(2)").addClass("active");
-
-        	//create and render blogview
-        	/*try {
-        		//try to remove loaded view
-				//registerview.undelegateEvents();
-				registerview.remove();
-				registerview.unbind();
-				//click on register button triggers X events
-				//depending on times view is started
-				//memory build up //TO DO
-				
-			}
-			catch(err) {
-			  	//Handle errors here
-			  	console.log(err);
-			}*/
 
 			//create new view
         	var registerview = new RegisterView;
@@ -342,24 +402,42 @@ var AppRouter = Backbone.Router.extend({
         	var blogview = new BlogView;
         	this.loadNewView(blogview);
         },
+        view_all_notes: function(){
+
+        	if (sessionStorage.active){
+				//remove current active element
+	        	$("#navbar li.active").removeClass("active");
+
+	        	//set active class on menu item about
+	        	$("#navbar li:eq(1)").addClass("active");
+
+	        	//create and render blogview
+	        	var noteview = new NoteView;
+	        	this.loadNewView(noteview);
+			}
+			else {
+				alert("You must sign in to see notes.");
+				approuter.navigate("", {trigger: true, replace: true});
+			}
+        	
+        },
 
         _unsetView: function(view){
            if (view){
-               view.undelegateEvents();
-               view.remove();
+           		try{
+           			//try to close depending views attached
+           			view.close();
+           		}
+           		catch(err){
+           			//alert("error");
+           		}
+               	view.undelegateEvents();
+               	view.remove();
            }
        },
 
        loadNewView: function(newView){
            this._unsetView(this.currentView);
-
-           /*if (User.isLoggedIn() == false && newView.isLogginView == undefined){
-               // Login redirect (ALR)
-               User.checkLoggedIn(Backbone.history.fragment);
-               AppRouter.navigate("#/login", {trigger: true, replace: true});
-               return;
-           }*/
-
            this.currentView = newView;
            this.el.empty().html(newView.el); // pitati
            //document.documentElement.scrollTop = 0; // pitati
@@ -376,7 +454,7 @@ $(function(){
 	var userbarview = new UserbarView;
 
 	// Instantiate the router
-    var approuter = new AppRouter;
+    approuter = new AppRouter;
 
     //Views
 
