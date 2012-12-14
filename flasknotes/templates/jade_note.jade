@@ -1,0 +1,12 @@
+div.row-fluid
+	for note in notes
+		div.well.span3
+			h4 #{note.title}
+			blockquote
+				p #{note.text}
+				small ID: 
+					cite #{note.id}
+			button.btn(style="margin-right:10px;") Edit
+			button.btn.btn-danger Delete
+	else
+		h4 You have not created any notes. Click on New Note to create one now.

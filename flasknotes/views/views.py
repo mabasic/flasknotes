@@ -108,3 +108,21 @@ def check_username():
         js = json.dumps({ "error":"username taken" , "message":"failed" })
         resp = Response(js , status=406, mimetype="application/json")
     return resp
+
+# Model - NoteModel - Collection
+@app.route("/api/notes", methods=["GET"])
+def get_notes():
+
+
+    if session.get('active'):
+
+        notes = db_session.query(Note).filter_by(user_id = session.get("idUser")).all()
+
+        js = json.dumps([note.toJSON() for note in notes])
+        resp = Response(js , status=200, mimetype="application/json")
+    
+    else:
+        js = json.dumps({ "error":"session" , "message":"inactive" })
+        resp = Response(js , status=406, mimetype="application/json")
+
+    return resp 
