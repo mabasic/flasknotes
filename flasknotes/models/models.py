@@ -50,6 +50,10 @@ class Note(Base):
             'text': self.text
             }
 
+    __mapper_args__ = {
+        'polymorphic_identity':'notes',
+    }
+
 class NoteHistory(Base):
     __tablename__ = "notes_history"
 
@@ -73,3 +77,4 @@ class NoteHistory(Base):
 
     def __repr__(self):
         return "<Note('%s','%s'.'%s')>" % (self.title, self.text, self.user_id, self.user_id_history)
+        
