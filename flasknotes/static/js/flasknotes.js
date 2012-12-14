@@ -303,27 +303,87 @@ var SidebarView = Backbone.View.extend({
 	},
 });
 
-//this shows blog posts from template
-var NoteView = Backbone.View.extend({
-	template: jade_note,
-	initialize: function(){
+//this is a view attached to #userbar
+//handles log in and log out, session
+var EditNoteView = Backbone.View.extend({
+	template: jade_note_edit,
+	initialize: function(options) {
 		_.bindAll(this, 'render'); //must-have in order for .this to work
+		//this.note_id = options.id;
 
-		this.notes = new NotesCollection();
+		this.note = notes_collection.get(options.note_id);
+		//alert(options.note_id);
+		//alert(this.note.get("text"));
+		//prilikom promjene podataka
+		//this.note.on("change", this.render);
+		approuter.navigate("#/notes/edit", {trigger: true, replace: true});
+		this.render();
 
-		this.notes.fetch({
+	},
+	events: {
+		//detect when the log in button is clicked
+		"click button.update" : "update_note"
+	},
+	update_note: function() {
+		
+		var upd_title = $("#note_title").val();
+		var upd_text = $("#note_text").val();
+		//$("#userbar input[name=username]").val();
+
+		this.note.set({
+			"title" : upd_title,
+			"text" : upd_text
+		});
+
+		this.note.save({
 			success: function() {
-
+				approuter.navigate("#/notes", {trigger: true, replace: true});
 			},
 			error: function() {
 
 			},
 		});
 
+		approuter.navigate("#/notes", {trigger: true, replace: true});
+		
+	},
+	render: function() {
+
+		//pass variables to jade template
+		this.$el.html(this.template({
+			//session_active : sessionStorage.active
+			//session_username : session.user.get("username")
+			note : this.note.toJSON()
+		}));
+
+	},
+});
+
+//this shows blog posts from template
+var NoteView = Backbone.View.extend({
+	template: jade_note,
+	initialize: function(){
+		_.bindAll(this, 'render'); //must-have in order for .this to work
+
+		//this.notes = new NotesCollection();
+		notes_collection.fetch();
+
+		/*this.notes.fetch({
+			success: function() {
+
+			},
+			error: function() {
+
+			},
+		});*/
+
 		this.sidebarview = new SidebarView;
 
 		//prilikom ucitavanja pocetnog stanja
-		this.notes.on("reset", this.render);
+		
+		//this.notes.on("reset", this.render);
+		notes_collection.on("reset", this.render);
+
 		//prilikom promjene podataka
 		//this.notes.on("change", this.render);
 		//prilikom brisanja podataka
@@ -333,12 +393,34 @@ var NoteView = Backbone.View.extend({
 
 		//this.render();
 	},
+	events: {
+		//detect when the log in button is clicked
+		"click button.edit_note" : "edit",
+		//detect when the log out button is clicked
+		"click button.delete_note" : "delete"
+	},
+	delete: function(e){
+		//var id = $("#content button.edit_delete").attr("note-id");
+		var clickedEl = $(e.currentTarget);
+  		var id = clickedEl.attr("note-id");
+		alert(id); //id of the clicked note
+	},
+	edit: function(e){
+		var clickedEl = $(e.currentTarget);
+  		var id = clickedEl.attr("note-id");
+		//alert(id); //id of the clicked note
+
+		var editnewnote = new EditNoteView({ note_id: id});
+    	approuter.loadNewView(editnewnote);
+
+	},
 	render: function(){
 
 		//render template and pass
 		$(this.el).html(this.template({
 			//variables
-			notes: this.notes.toJSON()
+			//notes: this.notes.toJSON()
+			notes: notes_collection.toJSON()
 		}));
 
 	},
@@ -361,6 +443,16 @@ var AppRouter = Backbone.Router.extend({
             "blog" : "blog",
             "about" : "about",
             "" : "home",
+            "note/new" : "new_note",
+            "note/edit" : "edit_note",
+        },
+        new_note: function(){
+        	//alert("haha");
+        	//EditNoteView
+
+			//create new view
+        	var editnewnote = new EditNoteView;
+        	this.loadNewView(editnewnote);
         },
         register: function(){
         	//remove current active element
@@ -458,6 +550,9 @@ $(function(){
 
     //Views
 
+    //Models & Collections
+    // contains all user notes
+    notes_collection = new NotesCollection();
 
 	// Start Backbone history a necessary step for bookmarkable URL's
     Backbone.history.start();

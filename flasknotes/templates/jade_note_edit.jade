@@ -1,0 +1,18 @@
+form.form-horizontal
+	
+	div#editNote.control-group.info
+		label.control-label(for="note_title") Title
+		div.controls
+			input(id="note_title", type="text", name="note_title", value="#{note.title}")
+
+	div.control-group
+		label.control-label(for="note_text") Text
+		div.controls
+			textarea(id="note_text", name="note_text")= note.text
+				
+
+	div.control-group
+		div.controls
+			button.btn.btn-primary.update(note-id="#{note.id}", type="button")
+				i.icon-file.icon-white
+				|  Update

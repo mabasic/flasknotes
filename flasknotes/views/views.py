@@ -28,6 +28,7 @@ def create_session():
     if user == None:
         js = json.dumps({ "error":"authentification" , "message":"failed" })
         resp = Response(js , status=406, mimetype="application/json")
+
     else:
         session['active'] = True
         session["idUser"] = user.idUser
@@ -39,11 +40,8 @@ def create_session():
 
 @app.route('/api/session', methods=["DELETE"])
 def delete_session():
-    #session.pop('logged_in', None)
-    #session.pop('idUser', None)
-    #session.pop('username', None)
+
     session.clear()
-    #flash('You were logged out')
 
     js = json.dumps({ "error":"none" , "message":"ok" })
     resp = Response(js , status=200, mimetype="application/json")
@@ -69,11 +67,18 @@ def sync_session():
 # Model - UserModel
 @app.route('/api/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
-    user = db_session.query(User).filter_by(idUser = user_id).first()
     
-    js = json.dumps(user.toJSON())
-    resp = Response(js, status=200, mimetype="application/json")
-    return resp
+    if session.get('active'):
+        user = db_session.query(User).filter_by(idUser = user_id).first()
+    
+        js = json.dumps(user.toJSON())
+        resp = Response(js, status=200, mimetype="application/json")
+    
+    else:
+        js = json.dumps({ "error":"session" , "message":"inactive" })
+        resp = Response(js , status=406, mimetype="application/json")
+
+    return resp 
 
 # Model - UserModel
 @app.route('/api/user', methods=['POST'])
@@ -89,6 +94,7 @@ def add_user():
 
     js = json.dumps({ "error":"none" , "message":"ok" })
     resp = Response(js , status=200, mimetype="application/json")
+
     return resp
 
 # Check if a user with received username exists
@@ -104,15 +110,16 @@ def check_username():
     if user == None:
         js = json.dumps({ "error":"none" , "message":"ok" })
         resp = Response(js , status=200, mimetype="application/json")
+
     else:
         js = json.dumps({ "error":"username taken" , "message":"failed" })
         resp = Response(js , status=406, mimetype="application/json")
+
     return resp
 
 # Model - NoteModel - Collection
 @app.route("/api/notes", methods=["GET"])
 def get_notes():
-
 
     if session.get('active'):
 
@@ -120,6 +127,35 @@ def get_notes():
 
         js = json.dumps([note.toJSON() for note in notes])
         resp = Response(js , status=200, mimetype="application/json")
+    
+    else:
+        js = json.dumps({ "error":"session" , "message":"inactive" })
+        resp = Response(js , status=406, mimetype="application/json")
+
+    return resp 
+
+# Model - NoteModel - Edit
+@app.route("/api/note/<int:note_id>", methods=["PUT"])
+def edit_note(note_id):
+
+    if session.get('active'):
+
+
+        noteJSON = json.loads(request.data)
+    
+        note = db_session.query(Note).filter_by(idNote = note_id).first()    
+        note.title = noteJSON["title"]
+        note.text = noteJSON["text"]
+
+        # (self, title, text, user_id, user_id_history):
+        note_history = NoteHistory(note.title, note.text, note.idNote, session.get("idUser"))
+        db_session.add(note_history)
+
+        db_session.commit()
+
+        js = json.dumps({ "error":"none" , "message":"ok" })
+        resp = Response(js , status=200, mimetype="application/json")
+        return resp
     
     else:
         js = json.dumps({ "error":"session" , "message":"inactive" })

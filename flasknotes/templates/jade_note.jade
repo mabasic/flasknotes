@@ -6,10 +6,10 @@ div.row-fluid
 				p #{note.text}
 				small ID: 
 					cite #{note.id}
-			button.btn(style="margin-right:10px;") 
+			button.edit_note.btn(style="margin-right:10px;", note-id="#{note.id}") 
 				i.icon-pencil
 				|  Edit
-			button.btn.btn-danger 
+			button.delete_note.btn.btn-danger(note-id="#{note.id}")
 				i.icon-remove.icon-white
 				|  Delete
 	else

@@ -37,7 +37,11 @@ buf.push('<div class="row-fluid">');
     for (var $index = 0, $$l = notes.length; $index < $$l; $index++) {
       var note = notes[$index];
 
-buf.push('<div class="well span3"><h4>' + escape((interp = note.title) == null ? '' : interp) + '</h4><blockquote><p>' + escape((interp = note.text) == null ? '' : interp) + '</p><small>ID: <cite>' + escape((interp = note.id) == null ? '' : interp) + '</cite></small></blockquote><button style="margin-right:10px;" class="btn"> <i class="icon-pencil"></i> Edit</button><button class="btn btn-danger"> <i class="icon-remove icon-white"></i> Delete</button></div>');
+buf.push('<div class="well span3"><h4>' + escape((interp = note.title) == null ? '' : interp) + '</h4><blockquote><p>' + escape((interp = note.text) == null ? '' : interp) + '</p><small>ID: <cite>' + escape((interp = note.id) == null ? '' : interp) + '</cite></small></blockquote><button');
+buf.push(attrs({ 'style':("margin-right:10px;"), 'note-id':("" + (note.id) + ""), "class": ('edit_note') + ' ' + ('btn') }, {"style":true,"note-id":true}));
+buf.push('> <i class="icon-pencil"></i> Edit</button><button');
+buf.push(attrs({ 'note-id':("" + (note.id) + ""), "class": ('delete_note') + ' ' + ('btn') + ' ' + ('btn-danger') }, {"note-id":true}));
+buf.push('><i class="icon-remove icon-white"></i> Delete</button></div>');
     }
 
   } else {
@@ -48,7 +52,11 @@ buf.push('<h4>You have not created any notes. Click on New Note to create one no
     for (var $index in notes) {
       $$l++;      var note = notes[$index];
 
-buf.push('<div class="well span3"><h4>' + escape((interp = note.title) == null ? '' : interp) + '</h4><blockquote><p>' + escape((interp = note.text) == null ? '' : interp) + '</p><small>ID: <cite>' + escape((interp = note.id) == null ? '' : interp) + '</cite></small></blockquote><button style="margin-right:10px;" class="btn"> <i class="icon-pencil"></i> Edit</button><button class="btn btn-danger"> <i class="icon-remove icon-white"></i> Delete</button></div>');
+buf.push('<div class="well span3"><h4>' + escape((interp = note.title) == null ? '' : interp) + '</h4><blockquote><p>' + escape((interp = note.text) == null ? '' : interp) + '</p><small>ID: <cite>' + escape((interp = note.id) == null ? '' : interp) + '</cite></small></blockquote><button');
+buf.push(attrs({ 'style':("margin-right:10px;"), 'note-id':("" + (note.id) + ""), "class": ('edit_note') + ' ' + ('btn') }, {"style":true,"note-id":true}));
+buf.push('> <i class="icon-pencil"></i> Edit</button><button');
+buf.push(attrs({ 'note-id':("" + (note.id) + ""), "class": ('delete_note') + ' ' + ('btn') + ' ' + ('btn-danger') }, {"note-id":true}));
+buf.push('><i class="icon-remove icon-white"></i> Delete</button></div>');
     }
 
     if ($$l === 0) {
@@ -76,6 +84,22 @@ var buf = [];
 with (locals || {}) {
 var interp;
 buf.push('<ul class="nav nav-list"><li class="nav-header">Actions</li><li><a href="#/note/new"><i class="icon-file"></i> New note</a></li></ul>');
+}
+return buf.join("");
+}
+var jade_note_edit = function anonymous(locals, attrs, escape, rethrow, merge) {
+attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
+var buf = [];
+with (locals || {}) {
+var interp;
+buf.push('<form class="form-horizontal"><div id="editNote" class="control-group info"><label for="note_title" class="control-label">Title</label><div class="controls"><input');
+buf.push(attrs({ 'id':("note_title"), 'type':("text"), 'name':("note_title"), 'value':("" + (note.title) + "") }, {"id":true,"type":true,"name":true,"value":true}));
+buf.push('/></div></div><div class="control-group"><label for="note_text" class="control-label">Text</label><div class="controls"><textarea id="note_text" name="note_text">');
+var __val__ = note.text
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</textarea></div></div><div class="control-group"><div class="controls"><button');
+buf.push(attrs({ 'note-id':("" + (note.id) + ""), 'type':("button"), "class": ('btn') + ' ' + ('btn-primary') + ' ' + ('update') }, {"note-id":true,"type":true}));
+buf.push('><i class="icon-file icon-white"></i> Update</button></div></div></form>');
 }
 return buf.join("");
 }
