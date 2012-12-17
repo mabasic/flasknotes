@@ -170,4 +170,4 @@ ENV
 node_modules
 
 # Generated templates functions file
-*/templates.js
+flasknotes/static/js/templates.js
