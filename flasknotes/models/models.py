@@ -1,9 +1,11 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, event
 from sqlalchemy.orm import relationship, backref
 from datetime import datetime
 from sqlalchemy.ext.declarative import declared_attr
 
-from flasknotes import Base
+from flask import session
+
+from flasknotes import Base, db_session
 
 class User(Base):
     __tablename__ = "users"
@@ -77,3 +79,35 @@ class NoteHistory(NoteMix, Base):
 
     def __repr__(self):
         return "<Note('%s','%s'.'%s')>" % (self.title, self.text, self.user_id, self.user_id_history)
+
+
+def recordNoteHistory(mapper, connection, target):
+    # execute a stored procedure upon UPDATE,
+    # apply the value to the row to be inserted
+
+    # create a target duplicate
+    target_cp = target
+
+    # remove target changes from current session
+    db_session.expunge(target)
+
+    # fetch row to be updated
+    note = db_session.query(Note).filter_by(idNote = target_cp.idNote).first()    
+
+    # create history (copy) of that note
+    note_history = NoteHistory(note.title, note.text, note.idNote, session.get("idUser"))
+
+    # add history to session
+    db_session.add(note_history)
+
+    # merge target_cp with current session
+    db_session.merge(target_cp)
+
+    # write changes to db
+    #db_session.commit() # there should ne no commit inside this function
+
+    # continue executing normal code
+
+# associate the listener function with SomeMappedClass,
+# to execute during the "before_update" hook
+event.listen(Note, 'before_update', recordNoteHistory)

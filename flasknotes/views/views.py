@@ -140,21 +140,14 @@ def edit_note(note_id):
 
     if session.get('active'):
 
-
         noteJSON = json.loads(request.data)
-    
+
         # get note with ID from DB
         note = db_session.query(Note).filter_by(idNote = note_id).first()    
-        
-        # create history (copy) of that note
-        note_history = NoteHistory(note.title, note.text, note.idNote, session.get("idUser"))
 
         # update note with new values
         note.title = noteJSON["title"]
         note.text = noteJSON["text"]
-
-        # add history to session
-        db_session.add(note_history)
 
         # commit changes to database
         db_session.commit()
